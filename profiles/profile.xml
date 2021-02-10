@@ -236,6 +236,27 @@
 				<option value="Sidebar">Sidebar</option>
 				<option value="Main area">Main area</option>
 			</field>
+            <field
+				name="pa"
+				id="pa"
+				type="staff"
+				label="PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_LABEL"
+				description="PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_DESC"
+				message="PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_MESSAGE"
+			>
+                <option value="">PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_DEFAULT</option>
+			</field>
+            <field
+                name="pa_details_only"
+                type="radio"
+                default="No"
+                label="PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_ONLY_LABEL"
+                description="PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_ONLY_DESC"
+                class="btn-group btn-group-yesno
+            ">
+                <option value="Yes">JYES</option>
+                <option value="No">JNO</option>
+            </field>
 		</fieldset>
         <fieldset name="projects"
 			label="PLG_USER_STAFFPROFILE_PROJECTS_TITLE"
