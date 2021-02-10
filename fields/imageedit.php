@@ -34,8 +34,8 @@ class JFormFieldImageEdit extends JFormField
 	protected $super_user_group_id;
 	protected $image_exists = false;
 
-	protected $default_src = '//www.gravatar.com/avatar/?d=mm';
-	protected $savepath = '/assets/images/avatars';
+	protected $default_src = '_none.jpg';
+	protected $savepath;
 	protected $savename;
 	protected $el_id;
 	protected $src;
@@ -51,6 +51,11 @@ class JFormFieldImageEdit extends JFormField
 
         $this->session_user = JFactory::getUser();
         $this->session_users_groups = $this->session_user->getAuthorisedGroups();
+
+        $plugin         = JPluginHelper::getPlugin('user', 'staffprofile');
+		$plugin_params  = new JRegistry($plugin->params);
+        $this->savepath = $plugin_params->get('avatar_dir');
+        #echo "<pre>\n"; var_dump($this->savepath); echo "</pre>\n";exit;
 
 
         $db	   = JFactory::getDBO();
@@ -83,8 +88,6 @@ class JFormFieldImageEdit extends JFormField
 		if (file_exists($_SERVER['DOCUMENT_ROOT'] . $this->src)) {
             $this->image_exists = true;
         }
-
-
     }
 
 	/**
@@ -104,20 +107,21 @@ class JFormFieldImageEdit extends JFormField
 
 	    $value = $this->src;
 	    if (!$this->image_exists || $this->value == '') {
-			$this->src = $this->default_src . '&';
+			$this->src =  $this->savepath  . '/' . $this->default_src . '?';// . '&';
 			$value = '';
 			#$src = 'http://www.placehold.it/80x80/EFEFEF/AAAAAA&text=no+image';
 		} else {
 			$this->src .= '?';
 		}
+
 		$output = '<img src="' . $this->src . 's=80&' . time() . '" height="80" width="80" alt="" id="' . $this->el_id . '-preview" /> ';
         $output .= '<input type="hidden" name="jform[profile][avatar_img]" id="' . $this->savename . '" value="' . $value . '" />';
 
         if (in_array($this->super_user_group_id, $this->session_users_groups) || in_array($this->admin_user_group_id, $this->session_users_groups)) {
             $imageedit_path = '/plugins/user/staffprofile/libraries/ImageEdit/j-image-edit.php?savename=' . $this->savename . '&amp;savedir=' . $this->savepath . '&amp;el_id=' . $this->el_id;
 
-            $output .= '<button type="button" class="btn btn-primary" onclick="SqueezeBox.fromElement(this, {handler:\'iframe\', size: {x: 700, y: 600}, url:\''.$imageedit_path.'\'})"> '.JText::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON').'</button> ';
-            $output .= '<button type="button" class="btn" onclick="document.getElementById(\'' . $this->el_id . '-preview\').src=\'' . $this->default_src . '\';document.getElementById(\'' . $this->savename . '\').value=\'\'">Remove image</button>';
+            $output .= '<button type="button" class="btn btn-primary" onclick="SqueezeBox.fromElement(this, {handler:\'iframe\', size: {x: 700, y: 600}, url:\'' . $imageedit_path .'\'})"> ' . JText::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
+            $output .= '<button type="button" class="btn" onclick="document.getElementById(\'' . $this->el_id . '-preview\').src=\'' .  $this->savepath  . '/' . $this->default_src . '\';document.getElementById(\'' . $this->savename . '\').value=\'\'">Remove image</button>';
         }
 		return $output;
 	}

@@ -232,7 +232,7 @@
 				label="PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_PLACEMENT_LABEL"
 				description="PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_PLACEMENT_DESC"
                 default="sidebar"
-                >
+            >
 				<option value="Sidebar">Sidebar</option>
 				<option value="Main area">Main area</option>
 			</field>
