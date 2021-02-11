@@ -114,6 +114,32 @@
 				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_MESSAGE"
 			/>
         </fieldset>
+        <fieldset name="connections"
+			label="PLG_USER_STAFFPROFILE_CONNECITONS_TITLE"
+		>
+            <field
+				name="twitter"
+				id="twitter"
+				type="text"
+				label="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_TWITTER_LABEL"
+				description="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_TWITTER_DESC"
+				message="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_TWITTER_MESSAGE"
+                hint="Optional"
+                prefix="https://twitter.com/"
+                pattern="^[A-Za-z0-9_]{1,32}$"
+			/>
+            <field
+				name="linkedin"
+				id="linkedin"
+				type="text"
+				label="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_LINKEDIN_LABEL"
+				description="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_LINKEDIN_DESC"
+				message="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_LINKEDIN_MESSAGE"
+                hint="Optional"
+                prefix="https://www.linkedin.com/in/"
+                pattern="[A-z0-9_-]+"
+			/>
+        </fieldset>
 		<!--<fieldset name="avatar"
 			label="PLG_USER_STAFFPROFILE_AVATAR_TITLE"
 		>
