@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fields name="profile">
-		<fieldset name="internal"
+		<fieldset
+            name="internal"
 			label="PLG_USER_STAFFPROFILE_INTERNAL_TITLE"
 		>
            <field
@@ -39,7 +40,8 @@
 				readonly="true"
 			/>
 		</fieldset>
-		<fieldset name="public"
+		<fieldset
+            name="public"
 			label="PLG_USER_STAFFPROFILE_PUBLIC_TITLE"
 		>
             <field
@@ -77,7 +79,7 @@
 				description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_STRAPLINE_DESC"
 				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_STRAPLINE_MESSAGE"
 				filter="string"
-				rows="3"
+				rows="2"
                 cols="50"
                 required="true"
 			/>-->
@@ -114,7 +116,8 @@
 				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_MESSAGE"
 			/>
         </fieldset>
-        <fieldset name="connections"
+        <fieldset
+            name="connections"
 			label="PLG_USER_STAFFPROFILE_CONNECITONS_TITLE"
 		>
             <field
@@ -180,7 +183,8 @@
 				size="30"
 			/>
         </fieldset>-->
-		<fieldset name="biography"
+		<fieldset
+            name="biography"
 			label="PLG_USER_STAFFPROFILE_BIOG_TITLE"
 		>
             <field
@@ -202,7 +206,8 @@
 				type="hidden"
 			/>-->
 		</fieldset>
-		<fieldset name="publications"
+		<fieldset
+            name="publications"
 			label="PLG_USER_STAFFPROFILE_PUBS_TITLE"
 		>
             <field
@@ -239,7 +244,8 @@
 				content="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_HELP"
 			/>
 		</fieldset>
-        <fieldset name="team"
+        <fieldset
+            name="team"
 			label="PLG_USER_STAFFPROFILE_TEAM_TITLE"
 		>
             <field
@@ -284,7 +290,8 @@
                 <option value="No">JNO</option>
             </field>
 		</fieldset>
-        <fieldset name="projects"
+        <fieldset
+            name="projects"
 			label="PLG_USER_STAFFPROFILE_PROJECTS_TITLE"
 		>
             <field
@@ -309,7 +316,8 @@
 				<option value="Main area">Main area</option>
 			</field>
 		</fieldset>
-        <fieldset name="custom"
+        <fieldset
+            name="custom"
 			label="PLG_USER_STAFFPROFILE_CUSTOM_TITLE"
 		>
             <field
@@ -350,6 +358,101 @@
 				id="custom_id"
 				type="hidden"
 			/>
+		</fieldset>
+        <fieldset
+            name="whatson-prefs"
+        	label="PLG_USER_STAFFPROFILE_WHATSON_TITLE"
+		>
+            <field
+                name="whatson-pref-day1"
+                type="textarea"
+                label="PLG_USER_STAFFPROFILE_WHATSON_FIELD_DAY1_LABEL"
+                description=""
+                rows="2"
+                cols="7"
+                class="u-fill-width"
+            />
+            <field
+                name="whatson-pref-day2"
+                type="textarea"
+                label="PLG_USER_STAFFPROFILE_WHATSON_FIELD_DAY2_LABEL"
+                description=""
+                rows="2"
+                cols="7"
+                class="u-fill-width"
+            />
+            <field
+                name="whatson-pref-day3"
+                type="textarea"
+                label="PLG_USER_STAFFPROFILE_WHATSON_FIELD_DAY3_LABEL"
+                description=""
+                rows="2"
+                cols="7"
+                class="u-fill-width"
+            />
+            <field
+                name="whatson-pref-day4"
+                type="textarea"
+                label="PLG_USER_STAFFPROFILE_WHATSON_FIELD_DAY4_LABEL"
+                description=""
+                rows="2"
+                cols="7"
+                class="u-fill-width"
+            />
+            <field
+                name="whatson-pref-day5"
+                type="textarea"
+                label="PLG_USER_STAFFPROFILE_WHATSON_FIELD_DAY5_LABEL"
+                description=""
+                rows="2"
+                cols="7"
+                class="u-fill-width"
+            />
+            <field
+                name="whatson-pref-day6"
+                type="textarea"
+                label="PLG_USER_STAFFPROFILE_WHATSON_FIELD_DAY1_LABEL"
+                description=""
+                rows="2"
+                cols="7"
+                class="u-fill-width"
+            />
+            <field
+                name="whatson-pref-day7"
+                type="textarea"
+                label="PLG_USER_STAFFPROFILE_WHATSON_FIELD_DAY2_LABEL"
+                description=""
+                rows="2"
+                cols="7"
+                class="u-fill-width"
+            />
+            <field
+                name="whatson-pref-day8"
+                type="textarea"
+                label="PLG_USER_STAFFPROFILE_WHATSON_FIELD_DAY3_LABEL"
+                description=""
+                rows="2"
+                cols="7"
+                class="u-fill-width"
+            />
+            <field
+                name="whatson-pref-day9"
+                type="textarea"
+                label="PLG_USER_STAFFPROFILE_WHATSON_FIELD_DAY4_LABEL"
+                description=""
+                rows="2"
+                cols="7"
+                class="u-fill-width"
+            />
+            <field
+                name="whatson-pref-day10"
+                type="textarea"
+                label="PLG_USER_STAFFPROFILE_WHATSON_FIELD_DAY5_LABEL"
+                description=""
+                rows="2"
+                cols="7"
+                class="u-fill-width"
+            />
 		</fieldset>
 	</fields>
 </form>
