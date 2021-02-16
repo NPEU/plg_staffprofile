@@ -18,23 +18,23 @@ defined('JPATH_BASE') or die;
  */
 class JFormFieldGravatar extends JFormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  11.1
-	 */
-	protected $type = 'Gravatar';
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  11.1
+     */
+    protected $type = 'Gravatar';
 
-	/**
-	 * Method to get the field input markup.
-	 *
-	 * @return  string  The field input markup.
-	 *
-	 * @since   11.3
-	 */
-	protected function getInput()
-	{
-		return '<img src="//www.gravatar.com/avatar/'.htmlspecialchars($this->value).'" height="80" width="80" alt="" />';
-	}
+    /**
+     * Method to get the field input markup.
+     *
+     * @return  string  The field input markup.
+     *
+     * @since   11.3
+     */
+    protected function getInput()
+    {
+        return '<img src="//www.gravatar.com/avatar/'.htmlspecialchars($this->value).'" height="80" width="80" alt="" />';
+    }
 }

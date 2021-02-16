@@ -28,49 +28,49 @@ FormHelper::loadFieldClass('editor');
 class ReqEditorField extends EditorField
 {
 
-	/**
-	 * The form field type.
-	 *
-	 * @var    string
-	 * @since  1.6
-	 */
-	public $type = 'ReqEditor';
-	
-	/**
-	 * Method to get the field input markup.
-	 *
-	 * @return  string  The field input markup.
-	 *
-	 * @since   11.3
-	 */
-	protected function getInput()
-	{
+    /**
+     * The form field type.
+     *
+     * @var    string
+     * @since  1.6
+     */
+    public $type = 'ReqEditor';
+    
+    /**
+     * Method to get the field input markup.
+     *
+     * @return  string  The field input markup.
+     *
+     * @since   11.3
+     */
+    protected function getInput()
+    {
         // Note, this is a clone of the core editor methods in:
         // /libraries/src/Form/Field/EditorField.php
         // with the addition of the required setting.
         
         #echo "<pre>\n"; var_dump($this->required); echo "</pre>\n"; exit;
         
-		// Get an editor object.
-		$editor = $this->getEditor();
-		$params = array(
-			'autofocus' => $this->autofocus,
-			'readonly'  => $this->readonly || $this->disabled,
-			'syntax'    => (string) $this->element['syntax'],
-		);
+        // Get an editor object.
+        $editor = $this->getEditor();
+        $params = array(
+            'autofocus' => $this->autofocus,
+            'readonly'  => $this->readonly || $this->disabled,
+            'syntax'    => (string) $this->element['syntax'],
+        );
 
-		return $editor->display(
-			$this->name,
-			htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8'),
-			$this->width,
-			$this->height,
-			$this->columns,
-			$this->rows,
-			$this->buttons ? (is_array($this->buttons) ? array_merge($this->buttons, $this->hide) : $this->hide) : false,
-			$this->id,
-			$this->asset,
-			$this->form->getValue($this->authorField),
-			$params
-		);
-	}
+        return $editor->display(
+            $this->name,
+            htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8'),
+            $this->width,
+            $this->height,
+            $this->columns,
+            $this->rows,
+            $this->buttons ? (is_array($this->buttons) ? array_merge($this->buttons, $this->hide) : $this->hide) : false,
+            $this->id,
+            $this->asset,
+            $this->form->getValue($this->authorField),
+            $params
+        );
+    }
 }

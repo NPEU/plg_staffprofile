@@ -1,283 +1,283 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fields name="profile">
-		<fieldset
+    <fields name="profile">
+        <fieldset
             name="internal"
-			label="PLG_USER_STAFFPROFILE_INTERNAL_TITLE"
-		>
+            label="PLG_USER_STAFFPROFILE_INTERNAL_TITLE"
+        >
            <field
-				type="editmsg"
-				label="PLG_USER_STAFFPROFILE_INTERNAL_MESSAGE"
-			/>
-			<field
-				name="tel"
-				id="tel"
-				type="text"
-				label="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_OFFICE_TEL_LABEL"
-				description="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_OFFICE_TEL_DESC"
-				message="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_OFFICE_TEL_MESSAGE"
-				filter="string"
-				size="30"
-			/>
-			<field
-				name="room"
-				id="room"
-				type="text"
-				label="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_ROOM_NUMBER_LABEL"
-				description="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_ROOM_NUMBER_DESC"
-				message="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_ROOM_NUMBER_MESSAGE"
-				filter="string"
-				size="30"
+                type="editmsg"
+                label="PLG_USER_STAFFPROFILE_INTERNAL_MESSAGE"
+            />
+            <field
+                name="tel"
+                id="tel"
+                type="text"
+                label="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_OFFICE_TEL_LABEL"
+                description="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_OFFICE_TEL_DESC"
+                message="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_OFFICE_TEL_MESSAGE"
+                filter="string"
+                size="30"
+            />
+            <field
+                name="room"
+                id="room"
+                type="text"
+                label="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_ROOM_NUMBER_LABEL"
+                description="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_ROOM_NUMBER_DESC"
+                message="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_ROOM_NUMBER_MESSAGE"
+                filter="string"
+                size="30"
                 hint="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_ROOM_NUMBER_HINT"
-			/>
+            />
             <field
-				name="alias"
-				id="alis"
-				type="text"
-				label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_ALIAS_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_ALIAS_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_ALIAS_MESSAGE"
-				readonly="true"
-			/>
-		</fieldset>
-		<fieldset
+                name="alias"
+                id="alis"
+                type="text"
+                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_ALIAS_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_ALIAS_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_ALIAS_MESSAGE"
+                readonly="true"
+            />
+        </fieldset>
+        <fieldset
             name="public"
-			label="PLG_USER_STAFFPROFILE_PUBLIC_TITLE"
-		>
+            label="PLG_USER_STAFFPROFILE_PUBLIC_TITLE"
+        >
             <field
-				name="displaygroup"
-				id="displaygroup"
-				type="list"
-				label="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_DISPLAYGROUP_LABEL"
-				description="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_DISPLAYGROUP_DESC"
-				message="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_DISPLAYGROUP_MESSAGE"
-				required="true"
-                default="Staff"
-			>
-				<!--<option value="">PLG_USER_STAFFPROFILE_INTERNAL_FIELD_DISPLAYGROUP_OPTION_0</option>-->
-				<option value="Director">Director</option>
-				<option value="Senior staff">Senior staff</option>
-				<option value="Staff">Staff</option>
-				<option value="Visitors and students">Visitors and students</option>
-			</field>
-			<field
-				name="role"
-				id="role"
-				type="text"
-				label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_ROLE_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_ROLE_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_ROLE_MESSAGE"
-				filter="string"
-				size="36"
+                name="displaygroup"
+                id="displaygroup"
+                type="list"
+                label="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_DISPLAYGROUP_LABEL"
+                description="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_DISPLAYGROUP_DESC"
+                message="PLG_USER_STAFFPROFILE_INTERNAL_FIELD_DISPLAYGROUP_MESSAGE"
                 required="true"
-			/>
+                default="Staff"
+            >
+                <!--<option value="">PLG_USER_STAFFPROFILE_INTERNAL_FIELD_DISPLAYGROUP_OPTION_0</option>-->
+                <option value="Director">Director</option>
+                <option value="Senior staff">Senior staff</option>
+                <option value="Staff">Staff</option>
+                <option value="Visitors and students">Visitors and students</option>
+            </field>
+            <field
+                name="role"
+                id="role"
+                type="text"
+                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_ROLE_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_ROLE_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_ROLE_MESSAGE"
+                filter="string"
+                size="36"
+                required="true"
+            />
             <!--<field
-				name="strapline"
-				id="strapline"
-				type="textarea"
-				label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_STRAPLINE_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_STRAPLINE_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_STRAPLINE_MESSAGE"
-				filter="string"
-				rows="2"
+                name="strapline"
+                id="strapline"
+                type="textarea"
+                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_STRAPLINE_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_STRAPLINE_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_STRAPLINE_MESSAGE"
+                filter="string"
+                rows="2"
                 cols="50"
                 required="true"
-			/>-->
-			<field
-				name="title"
-				id="title"
-				type="text"
-				label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_TITLE_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_TITLE_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_TITLE_MESSAGE"
-				filter="string"
-				size="30"
-                hint="Optional"
-			/>
-			<field
-				name="qualifications"
-				id="qualifications"
-				type="text"
-				label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_QUALS_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_QUALS_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_QUALS_MESSAGE"
-				filter="string"
-				size="30"
-                hint="Optional"
-			/>
+            />-->
             <field
-				name="avatar_img"
-				id="avatar_img"
-				type="imageedit"
-				label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_LABEL"
-				label_can_edit="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_CAN_EDIT_LABEL"
-				label_empty="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_EMPTY_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_MESSAGE"
-			/>
+                name="title"
+                id="title"
+                type="text"
+                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_TITLE_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_TITLE_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_TITLE_MESSAGE"
+                filter="string"
+                size="30"
+                hint="Optional"
+            />
+            <field
+                name="qualifications"
+                id="qualifications"
+                type="text"
+                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_QUALS_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_QUALS_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_QUALS_MESSAGE"
+                filter="string"
+                size="30"
+                hint="Optional"
+            />
+            <field
+                name="avatar_img"
+                id="avatar_img"
+                type="imageedit"
+                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_LABEL"
+                label_can_edit="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_CAN_EDIT_LABEL"
+                label_empty="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_EMPTY_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_MESSAGE"
+            />
         </fieldset>
         <fieldset
             name="connections"
-			label="PLG_USER_STAFFPROFILE_CONNECITONS_TITLE"
-		>
+            label="PLG_USER_STAFFPROFILE_CONNECITONS_TITLE"
+        >
             <field
-				name="twitter"
-				id="twitter"
-				type="text"
-				label="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_TWITTER_LABEL"
-				description="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_TWITTER_DESC"
-				message="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_TWITTER_MESSAGE"
+                name="twitter"
+                id="twitter"
+                type="text"
+                label="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_TWITTER_LABEL"
+                description="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_TWITTER_DESC"
+                message="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_TWITTER_MESSAGE"
                 hint="Optional"
                 prefix="https://twitter.com/"
                 pattern="^[A-Za-z0-9_]{1,32}$"
-			/>
+            />
             <field
-				name="linkedin"
-				id="linkedin"
-				type="text"
-				label="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_LINKEDIN_LABEL"
-				description="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_LINKEDIN_DESC"
-				message="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_LINKEDIN_MESSAGE"
+                name="linkedin"
+                id="linkedin"
+                type="text"
+                label="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_LINKEDIN_LABEL"
+                description="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_LINKEDIN_DESC"
+                message="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_LINKEDIN_MESSAGE"
                 hint="Optional"
                 prefix="https://www.linkedin.com/in/"
                 pattern="[A-z0-9_-]+"
-			/>
+            />
         </fieldset>
-		<!--<fieldset name="avatar"
-			label="PLG_USER_STAFFPROFILE_AVATAR_TITLE"
-		>
+        <!--<fieldset name="avatar"
+            label="PLG_USER_STAFFPROFILE_AVATAR_TITLE"
+        >
             <field
-				name="avatar_img"
-				id="avatar_img"
-				type="imageedit"
-				label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_MESSAGE"
-			/>
-			<field
-				name="use_gravatar"
-				id="use_gravatar"
-				type="checkboxdefault"
-				label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_USE_GRAVATAR_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_USE_GRAVATAR_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_USE_GRAVATAR_MESSAGE"
-				default="0"
+                name="avatar_img"
+                id="avatar_img"
+                type="imageedit"
+                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_MESSAGE"
+            />
+            <field
+                name="use_gravatar"
+                id="use_gravatar"
+                type="checkboxdefault"
+                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_USE_GRAVATAR_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_USE_GRAVATAR_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_USE_GRAVATAR_MESSAGE"
+                default="0"
                 class="push-down"
-			/>
-			<field
-				name="gravatar_img"
-				id="gravatar_img"
-				type="gravatar"
-				label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAR_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAR_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAR_MESSAGE"
-			/>
-			<field
-				name="gravatar_email"
-				id="gravatar_email"
-				type="text"
-				label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAREMAIL_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAREMAIL_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAREMAIL_MESSAGE"
-				filter="string"
-				size="30"
-			/>
+            />
+            <field
+                name="gravatar_img"
+                id="gravatar_img"
+                type="gravatar"
+                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAR_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAR_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAR_MESSAGE"
+            />
+            <field
+                name="gravatar_email"
+                id="gravatar_email"
+                type="text"
+                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAREMAIL_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAREMAIL_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAREMAIL_MESSAGE"
+                filter="string"
+                size="30"
+            />
         </fieldset>-->
-		<fieldset
+        <fieldset
             name="biography"
-			label="PLG_USER_STAFFPROFILE_BIOG_TITLE"
-		>
+            label="PLG_USER_STAFFPROFILE_BIOG_TITLE"
+        >
             <field
-				name="biography"
-				id="biography"
-				type="editor"
-				label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_BIOGRAPHY_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_BIOGRAPHY_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_BIOGRAPHY_MESSAGE"
-				filter="safehtml"
-				buttons="false"
-				rows="1"
-				cols="50"
+                name="biography"
+                id="biography"
+                type="editor"
+                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_BIOGRAPHY_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_BIOGRAPHY_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_BIOGRAPHY_MESSAGE"
+                filter="safehtml"
+                buttons="false"
+                rows="1"
+                cols="50"
                 required="true"
-			/>
-			<!--<field
-				name="biography_id"
-				id="biography_id"
-				type="hidden"
-			/>-->
-		</fieldset>
-		<fieldset
+            />
+            <!--<field
+                name="biography_id"
+                id="biography_id"
+                type="hidden"
+            />-->
+        </fieldset>
+        <fieldset
             name="publications"
-			label="PLG_USER_STAFFPROFILE_PUBS_TITLE"
-		>
+            label="PLG_USER_STAFFPROFILE_PUBS_TITLE"
+        >
             <field
-				name="publications_manual"
-				id="publications_manual"
-				type="editor"
-				label="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_MANUAL_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_MANUAL_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_MANUAL_MESSAGE"
-				filter="safehtml"
-				buttons="false"
-				rows="1"
-				cols="50"
-			/>
+                name="publications_manual"
+                id="publications_manual"
+                type="editor"
+                label="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_MANUAL_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_MANUAL_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_MANUAL_MESSAGE"
+                filter="safehtml"
+                buttons="false"
+                rows="1"
+                cols="50"
+            />
             <field
-				name="publications_id"
-				id="publications_id"
-				type="hidden"
-			/>
-			<field
-				name="publications_query"
-				id="publications_query"
-				type="textarea"
-				label="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_AUTO_LABEL"
-				description="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_AUTO_DESC"
-				message="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_AUTO_MESSAGE"
-				filter="safehtml"
-				cols="30"
-				rows="5"
-			/>
-			<field
-				type="edithelp"
-				heading="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_HELP_HEADING"
-				content="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_HELP"
-			/>
-		</fieldset>
+                name="publications_id"
+                id="publications_id"
+                type="hidden"
+            />
+            <field
+                name="publications_query"
+                id="publications_query"
+                type="textarea"
+                label="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_AUTO_LABEL"
+                description="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_AUTO_DESC"
+                message="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_AUTO_MESSAGE"
+                filter="safehtml"
+                cols="30"
+                rows="5"
+            />
+            <field
+                type="edithelp"
+                heading="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_HELP_HEADING"
+                content="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_HELP"
+            />
+        </fieldset>
         <fieldset
             name="team"
-			label="PLG_USER_STAFFPROFILE_TEAM_TITLE"
-		>
+            label="PLG_USER_STAFFPROFILE_TEAM_TITLE"
+        >
             <field
-				name="team"
-				id="team"
-				type="staff"
+                name="team"
+                id="team"
+                type="staff"
                 multiple="true"
-				label="PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_LABEL"
-				description="PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_DESC"
-				message="PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_MESSAGE"
-			/>
+                label="PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_LABEL"
+                description="PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_DESC"
+                message="PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_MESSAGE"
+            />
             <field
-				name="team_placement"
-				id="team_placement"
-				type="list"
-				label="PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_PLACEMENT_LABEL"
-				description="PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_PLACEMENT_DESC"
+                name="team_placement"
+                id="team_placement"
+                type="list"
+                label="PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_PLACEMENT_LABEL"
+                description="PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_PLACEMENT_DESC"
                 default="sidebar"
             >
-				<option value="Sidebar">Sidebar</option>
-				<option value="Main area">Main area</option>
-			</field>
+                <option value="Sidebar">Sidebar</option>
+                <option value="Main area">Main area</option>
+            </field>
             <field
-				name="pa"
-				id="pa"
-				type="staff"
-				label="PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_LABEL"
-				description="PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_DESC"
-				message="PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_MESSAGE"
-			>
+                name="pa"
+                id="pa"
+                type="staff"
+                label="PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_LABEL"
+                description="PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_DESC"
+                message="PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_MESSAGE"
+            >
                 <option value="">PLG_USER_STAFFPROFILE_TEAM_FIELD_PA_DEFAULT</option>
-			</field>
+            </field>
             <field
                 name="pa_details_only"
                 type="radio"
@@ -289,80 +289,80 @@
                 <option value="Yes">JYES</option>
                 <option value="No">JNO</option>
             </field>
-		</fieldset>
+        </fieldset>
         <fieldset
             name="projects"
-			label="PLG_USER_STAFFPROFILE_PROJECTS_TITLE"
-		>
+            label="PLG_USER_STAFFPROFILE_PROJECTS_TITLE"
+        >
             <field
-				name="projects"
-				id="projects"
-				type="projects"
+                name="projects"
+                id="projects"
+                type="projects"
                 extension="com_content"
                 multiple="true"
-				label="PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_LABEL"
-				description="PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_DESC"
-				message="PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_MESSAGE"
-			/>
+                label="PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_LABEL"
+                description="PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_DESC"
+                message="PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_MESSAGE"
+            />
             <field
-				name="projects_placement"
-				id="projects_placement"
-				type="list"
-				label="PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_PLACEMENT_LABEL"
-				description="PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_PLACEMENT_DESC"
+                name="projects_placement"
+                id="projects_placement"
+                type="list"
+                label="PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_PLACEMENT_LABEL"
+                description="PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_PLACEMENT_DESC"
                 default="sidebar"
                 >
-				<option value="Sidebar">Sidebar</option>
-				<option value="Main area">Main area</option>
-			</field>
-		</fieldset>
+                <option value="Sidebar">Sidebar</option>
+                <option value="Main area">Main area</option>
+            </field>
+        </fieldset>
         <fieldset
             name="custom"
-			label="PLG_USER_STAFFPROFILE_CUSTOM_TITLE"
-		>
+            label="PLG_USER_STAFFPROFILE_CUSTOM_TITLE"
+        >
             <field
-				name="custom_title"
-				id="custom_title"
-				type="text"
-				label="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_TITLE_LABEL"
-				description="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_TITLE_DESC"
-				message="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_TITLE_MESSAGE"
-				filter="string"
-				size="30"
-			/>
-			<field                
+                name="custom_title"
+                id="custom_title"
+                type="text"
+                label="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_TITLE_LABEL"
+                description="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_TITLE_DESC"
+                message="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_TITLE_MESSAGE"
+                filter="string"
+                size="30"
+            />
+            <field                
                 name="custom"
-				id="custom"
-				type="editor"
-				label="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_CONTENT_LABEL"
-				description="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_CONTENT_DESC"
-				message="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_CONTENT_MESSAGE"
-				filter="safehtml"
-				buttons="false"
-				rows="1"
-				cols="50"
-			/>
+                id="custom"
+                type="editor"
+                label="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_CONTENT_LABEL"
+                description="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_CONTENT_DESC"
+                message="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_CONTENT_MESSAGE"
+                filter="safehtml"
+                buttons="false"
+                rows="1"
+                cols="50"
+            />
             <field
-				name="custom_placement"
-				id="custom_placement"
-				type="list"
-				label="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_CUSTOM_PLACEMENT_LABEL"
-				description="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_CUSTOM_PLACEMENT_DESC"
+                name="custom_placement"
+                id="custom_placement"
+                type="list"
+                label="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_CUSTOM_PLACEMENT_LABEL"
+                description="PLG_USER_STAFFPROFILE_CUSTOM_FIELD_CUSTOM_PLACEMENT_DESC"
                 default="sidebar"
                 >
-				<option value="Sidebar">Sidebar</option>
-				<option value="Main area">Main area</option>
-			</field>
+                <option value="Sidebar">Sidebar</option>
+                <option value="Main area">Main area</option>
+            </field>
             <field
-				name="custom_id"
-				id="custom_id"
-				type="hidden"
-			/>
-		</fieldset>
+                name="custom_id"
+                id="custom_id"
+                type="hidden"
+            />
+        </fieldset>
         <fieldset
             name="whatson-prefs"
-        	label="PLG_USER_STAFFPROFILE_WHATSON_TITLE"
-		>
+            label="PLG_USER_STAFFPROFILE_WHATSON_TITLE"
+        >
             <field
                 name="whatson-pref-day1"
                 type="textarea"
@@ -453,6 +453,6 @@
                 cols="7"
                 class="u-fill-width"
             />
-		</fieldset>
-	</fields>
+        </fieldset>
+    </fields>
 </form>
