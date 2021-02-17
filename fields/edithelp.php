@@ -64,7 +64,9 @@ class JFormFieldEditHelp extends JFormField
      
         $html = array();
         
-        $html[] = '<details>';
+        $class = (empty($this->element['class']) ? '' : ' class="' . $this->element['class'] . '"');
+        
+        $html[] = '<details' . $class . '>';
         $html[] = '<summary><b>' . $heading . '</b></summary>';
         
         $html[] = '<div>';

@@ -200,11 +200,6 @@
                 cols="50"
                 required="true"
             />
-            <!--<field
-                name="biography_id"
-                id="biography_id"
-                type="hidden"
-            />-->
         </fieldset>
         <fieldset
             name="publications"
@@ -223,11 +218,6 @@
                 cols="50"
             />
             <field
-                name="publications_id"
-                id="publications_id"
-                type="hidden"
-            />
-            <field
                 name="publications_query"
                 id="publications_query"
                 type="textarea"
@@ -242,6 +232,7 @@
                 type="edithelp"
                 heading="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_HELP_HEADING"
                 content="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_HELP"
+                class="u-space--above--s"
             />
         </fieldset>
         <fieldset
@@ -353,11 +344,6 @@
                 <option value="Sidebar">Sidebar</option>
                 <option value="Main area">Main area</option>
             </field>
-            <field
-                name="custom_id"
-                id="custom_id"
-                type="hidden"
-            />
         </fieldset>
         <fieldset
             name="whatson-prefs"
