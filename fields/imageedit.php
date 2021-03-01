@@ -99,6 +99,7 @@ class JFormFieldImageEdit extends JFormField
      */
     protected function getInput()
     {
+        $app = JFactory::getApplication();
 
         #echo "<pre>\n"; var_dump($this->user); echo "</pre>\n"; exit;
         #echo "<pre>\n"; var_dump($this->users_groups); echo "</pre>\n"; exit;
@@ -118,9 +119,16 @@ class JFormFieldImageEdit extends JFormField
         $output .= '<input type="hidden" name="jform[profile][avatar_img]" id="' . $this->savename . '" value="' . $value . '" />';
 
         if (in_array($this->super_user_group_id, $this->session_users_groups) || in_array($this->admin_user_group_id, $this->session_users_groups)) {
-            $imageedit_path = '/plugins/user/staffprofile/libraries/ImageEdit/j-image-edit.php?savename=' . $this->savename . '&amp;savedir=' . $this->savepath . '&amp;el_id=' . $this->el_id;
+            
+            $imageedit_path = '/plugins/user/staffprofile/libraries/ImageEdit/j-image-edit.php?savename=' . $this->savename . '&amp;savedir=' . $this->savepath . '&amp;el_id=' . $this->el_id . '&isadmin=' . ($app->isAdmin() ? '1' : '0');
 
-            $output .= '<button type="button" class="btn btn-primary" onclick="SqueezeBox.fromElement(this, {handler:\'iframe\', size: {x: 700, y: 600}, url:\'' . $imageedit_path .'\'})"> ' . JText::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
+            if ($app->isAdmin()) {
+                $output .= '<button type="button" class="btn btn-primary" onclick="SqueezeBox.fromElement(this, {handler:\'iframe\', size: {x: 700, y: 600}, url:\'' . $imageedit_path .'\'})"> ' . JText::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
+            } else {
+                $output .= '<button type="button" class="btn btn-primary" onclick="document.getElementById(\'avatar-image-editor\').setAttribute(\'src\', \'' . $imageedit_path . '\')" data-a11y-dialog-show="avatar-dialog"> ' . JText::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
+            }
+            
+            
             $output .= '<button type="button" class="btn" onclick="document.getElementById(\'' . $this->el_id . '-preview\').src=\'' .  $this->savepath  . '/' . $this->default_src . '\';document.getElementById(\'' . $this->savename . '\').value=\'\'">Remove image</button>';
         }
         return $output;

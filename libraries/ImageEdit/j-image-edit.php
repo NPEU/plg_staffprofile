@@ -1,4 +1,9 @@
 <?php
+$isadmin = isset($_GET['isadmin']) ? (bool) $_GET['isadmin'] : false;
+if (empty($isadmin)) {
+	$isadmin = isset($_POST['isadmin']) ? $_POST['isadmin'] : '';
+}
+
 $fieldname = 'image';
 $savedir   = isset($_GET['savedir']) ? urldecode($_GET['savedir']) : '';
 if (empty($savedir)) {
@@ -45,7 +50,9 @@ if ($vals['saved']) {
 </head>
 <body>
 <div class="container-fluid">
+<?php if ($isadmin) : ?>
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="window.parent.SqueezeBox.close();">&times;</button>
+<?php endif; ?>
 	<div class="row-fluid">
 		<?php if ($step == 1): ?>
 		<h1>Step 1: Choose image</h1>
@@ -58,6 +65,7 @@ if ($vals['saved']) {
 			<input type="hidden" id="savename" name="savename" value="<?php echo $savename; ?>" />
 			<input type="hidden" id="savedir" name="savedir" value="<?php echo $savedir; ?>" />
 			<input type="hidden" id="el_id" name="el_id" value="<?php echo $el_id; ?>" />
+			<input type="hidden" id="isadmin" name="isadmin" value="<?php echo $isadmin; ?>" />
 			<div class="fileupload fileupload-new" data-provides="fileupload">
 				<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="/assets/images/avatars/_none.jpg" /></div>
 				<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
@@ -85,6 +93,7 @@ if ($vals['saved']) {
 			<input type="hidden" id="savename" name="savename" value="<?php echo $savename; ?>" />
 			<input type="hidden" id="savedir" name="savedir" value="<?php echo $savedir; ?>" />
 			<input type="hidden" id="el_id" name="el_id" value="<?php echo $el_id; ?>" />
+            <input type="hidden" id="isadmin" name="isadmin" value="<?php echo $isadmin; ?>" />
 			<input type="hidden" id="version" name="version" value="<?php echo $vals['version']; ?>" />
 			<input type="hidden" id="x" name="x">
 			<input type="hidden" id="y" name="y">
