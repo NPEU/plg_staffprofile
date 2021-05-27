@@ -2,7 +2,7 @@
 <form>
     <fields name="profile">
         <fieldset
-            name="internal"
+            name="internal_fields"
             label="PLG_USER_STAFFPROFILE_INTERNAL_TITLE"
         >
            <field
@@ -41,7 +41,7 @@
             />
         </fieldset>
         <fieldset
-            name="public"
+            name="public_fields"
             label="PLG_USER_STAFFPROFILE_PUBLIC_TITLE"
         >
             <field
@@ -117,7 +117,7 @@
             />
         </fieldset>
         <fieldset
-            name="connections"
+            name="connections_fields"
             label="PLG_USER_STAFFPROFILE_CONNECITONS_TITLE"
         >
             <field
@@ -184,7 +184,7 @@
             />
         </fieldset>-->
         <fieldset
-            name="biography"
+            name="biography_fields"
             label="PLG_USER_STAFFPROFILE_BIOG_TITLE"
         >
             <field
@@ -202,7 +202,7 @@
             />
         </fieldset>
         <fieldset
-            name="publications"
+            name="publications_fields"
             label="PLG_USER_STAFFPROFILE_PUBS_TITLE"
         >
             <field
@@ -236,7 +236,7 @@
             />
         </fieldset>
         <fieldset
-            name="team"
+            name="team_fields"
             label="PLG_USER_STAFFPROFILE_TEAM_TITLE"
         >
             <field
@@ -282,7 +282,7 @@
             </field>
         </fieldset>
         <fieldset
-            name="projects"
+            name="projects_fields"
             label="PLG_USER_STAFFPROFILE_PROJECTS_TITLE"
         >
             <field
@@ -308,7 +308,7 @@
             </field>
         </fieldset>
         <fieldset
-            name="custom"
+            name="custom_fields"
             label="PLG_USER_STAFFPROFILE_CUSTOM_TITLE"
         >
             <field
@@ -346,7 +346,7 @@
             </field>
         </fieldset>
         <fieldset
-            name="whatson-prefs"
+            name="whatson-prefs_fields"
             label="PLG_USER_STAFFPROFILE_WHATSON_TITLE"
         >
             <field
@@ -440,5 +440,34 @@
                 class="u-fill-width"
             />
         </fieldset>
+        <!--<fieldset
+            name="whatson-filters_fields"
+            label="PLG_USER_STAFFPROFILE_WHATSONFILTER_TITLE"
+        >
+            <field
+            name="whatson_filters"
+            type="subform"
+            label="PLG_USER_STAFFPROFILE_WHATSONFILTER_TITLE"
+            description="COM_RESEARCHPROJECTS_COLLABORATORS_DESC"
+            multiple="true"
+            min="1"
+            max="100"
+        >
+            <form>
+                <field
+                    name="whatson_filter_name"
+                    type="text"
+                    label="PLG_USER_STAFFPROFILE_WHATSONFILTER_FILTER_NAME_LABEL"
+                    description="PLG_USER_STAFFPROFILE_WHATSONFILTER_FILTER_NAME_DESC"
+                />
+                <field
+                    name="whatson_filter_value"
+                    type="text"
+                    label="PLG_USER_STAFFPROFILE_WHATSONFILTER_FILTER_VALUE_LABEL"
+                    description="PLG_USER_STAFFPROFILE_WHATSONFILTER_FILTER_VALUE_DESC"
+                />
+            </form>
+        </field>
+        </fieldset>-->
     </fields>
 </form>
