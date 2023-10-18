@@ -120,9 +120,9 @@ class JFormFieldImageEdit extends JFormField
 
         if (in_array($this->super_user_group_id, $this->session_users_groups) || in_array($this->admin_user_group_id, $this->session_users_groups)) {
             
-            $imageedit_path = '/plugins/user/staffprofile/libraries/ImageEdit/j-image-edit.php?savename=' . $this->savename . '&amp;savedir=' . $this->savepath . '&amp;el_id=' . $this->el_id . '&isadmin=' . ($app->isAdmin() ? '1' : '0');
+            $imageedit_path = '/plugins/user/staffprofile/libraries/ImageEdit/j-image-edit.php?savename=' . $this->savename . '&amp;savedir=' . $this->savepath . '&amp;el_id=' . $this->el_id . '&isadmin=' . ($app->isClient('administrator') ? '1' : '0');
 
-            if ($app->isAdmin()) {
+            if ($app->isClient('administrator')) {
                 $output .= '<button type="button" class="btn btn-primary" onclick="SqueezeBox.fromElement(this, {handler:\'iframe\', size: {x: 700, y: 600}, url:\'' . $imageedit_path .'\'})"> ' . JText::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
             } else {
                 $output .= '<button type="button" class="btn btn-primary" onclick="document.getElementById(\'avatar-image-editor\').setAttribute(\'src\', \'' . $imageedit_path . '\')" data-a11y-dialog-show="avatar-dialog"> ' . JText::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';

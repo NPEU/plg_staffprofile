@@ -63,7 +63,7 @@ class plgUserStaffProfile extends JPlugin {
         $app = JFactory::getApplication();
         // @TODO - investigate using a modal that's already available in admin. Not sure why I have
         // to load this:
-        if ($app->isAdmin()) {
+        if ($app->isClient('administrator')) {
             // Add modal script (Squeezebox) for admin
             $doc = JFactory::getDocument();
             $doc->addScript('/media/system/js/mootools-core.js');
@@ -279,7 +279,7 @@ class plgUserStaffProfile extends JPlugin {
 
         // Hacky stuff to add save handler for editor:
         $app = JFactory::getApplication();
-        if ($app->isAdmin()) {
+        if ($app->isClient('administrator')) {
             //return true;
             $doc = JFactory::getDocument();
             $script = array();
