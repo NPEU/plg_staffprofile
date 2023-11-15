@@ -1,23 +1,22 @@
 <?php
-/**
- * @package     Joomla.Plugins
- * @subpackage  plg_staff_profile
- *
- * @copyright   Copyright (C) 2013 Andy Kirk.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+namespace NPEU\Plugin\User\StaffProfile\Field;
 
-defined('JPATH_BASE') or die;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Field\UsergrouplistField;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\Database\DatabaseInterface;
+
+defined('_JEXEC') or die;
+
+#JFormHelper::loadFieldClass('list');
 
 /**
- * Form Field class for the Joomla Platform.
- * Provides spacer markup to be used in form layouts.
- *
- * @package     Joomla.Platform
- * @subpackage  Form
- * @since       11.3
+ * Form field for a list of admin groups.
  */
-class JFormFieldEditMsg extends JFormField
+class EditMsgpField extends Field
 {
     /**
      * The form field type.
@@ -26,7 +25,7 @@ class JFormFieldEditMsg extends JFormField
      * @since  11.1
      */
     protected $type = 'EditMsg';
-    
+
     protected $layout;
 
     /**
@@ -42,22 +41,22 @@ class JFormFieldEditMsg extends JFormField
      *
      * @since   11.1
      */
-    public function setup(SimpleXMLElement $element, $value, $group = null)
+    public function setup(\SimpleXMLElement $element, $value, $group = null)
     {
-        
-        $app = JFactory::getApplication();
+
+        $app = Factory::getApplication();
         $t = $app->getTemplate(true);
-        
+
         /*
         if ($t->template != 'npeu5') {
             return;
         }
         */
-        
-        
+
+
         $return    = parent::setup($element, $value, $group);
-        $layout    = JFactory::getApplication()->input->get('layout');
-        
+        $layout    = Factory::getApplication()->input->get('layout');
+
         #echo "<pre>\n"; var_dump($menu_item->query['layout']); echo "</pre>\n"; exit;
         if (!$layout) {
             if ($t->template == 'npeu5') {
@@ -69,14 +68,14 @@ class JFormFieldEditMsg extends JFormField
                 $layout = $menu_item->query['layout'];
             }
         }
-        #echo "<pre>\n"; var_dump(JFactory::getApplication()->input->get('layout')); echo "</pre>\n"; exit;
-        #echo "<pre>\n"; var_dump(JFactory::getApplication()); echo "</pre>\n"; exit;
-        
+        #echo "<pre>\n"; var_dump(Factory::getApplication()->input->get('layout')); echo "</pre>\n"; exit;
+        #echo "<pre>\n"; var_dump(Factory::getApplication()); echo "</pre>\n"; exit;
+
        # echo "<pre>\n"; var_dump($menu_item); echo "</pre>\n"; exit;
         if ($layout != 'edit') {
             $this->hidden = true;
         }
-        
+
         $this->layout = $layout;
         return $return;
     }
@@ -105,7 +104,7 @@ class JFormFieldEditMsg extends JFormField
      */
     protected function getLabel()
     {
-        #if (JFactory::getApplication()->input->get('layout') != 'edit') {
+        #if (Factory::getApplication()->input->get('layout') != 'edit') {
         if ($this->layout != 'edit') {
             return '';
         }
@@ -113,60 +112,16 @@ class JFormFieldEditMsg extends JFormField
         $html = array();
         #$class = $this->element['class'] ? (string) $this->element['class'] : '';
         $class = 'input-block-level input-xxlarge well pagination-centered invalid';
-        
+
         $html[] = '<span class="' . $class . '">';
         // Get the label text from the XML element, defaulting to the element name.
         $text   = $this->element['label'] ? (string) $this->element['label'] : (string) $this->element['name'];
-        $text   = $this->translateLabel ? JText::_($text) : $text;
+        $text   = $this->translateLabel ? Text::_($text) : $text;
         $html[] = $text;
-        
+
         $html[] = '</span>';
-        
+
         return implode('', $html);
-        
-        /*
-
-        $html[] = '<span class="spacer">';
-        $html[] = '<span class="before"></span>';
-        $html[] = '<span class="' . $class . '">';
-        if ((string) $this->element['hr'] == 'true')
-        {
-            $html[] = '<hr class="' . $class . '" />';
-        }
-        else
-        {
-            $label = '';
-
-            // Get the label text from the XML element, defaulting to the element name.
-            $text = $this->element['label'] ? (string) $this->element['label'] : (string) $this->element['name'];
-            $text = $this->translateLabel ? JText::_($text) : $text;
-
-            // Build the class for the label.
-            $class = !empty($this->description) ? 'hasTip' : '';
-            $class = $this->required == true ? $class . ' required' : $class;
-
-            // Add the opening label tag and main attributes attributes.
-            $label .= '<label id="' . $this->id . '-lbl" class="' . $class . '"';
-
-            // If a description is specified, use it to build a tooltip.
-            if (!empty($this->description))
-            {
-                $label .= ' title="'
-                    . htmlspecialchars(
-                    trim($text, ':') . '::' . ($this->translateDescription ? JText::_($this->description) : $this->description),
-                    ENT_COMPAT, 'UTF-8'
-                ) . '"';
-            }
-
-            // Add the label text and closing tag.
-            $label .= '>' . $text . '</label>';
-            $html[] = $label;
-        }
-        $html[] = '</span>';
-        $html[] = '<span class="after"></span>';
-        $html[] = '</span>';
-
-        return implode('', $html);*/
     }
 
     /**

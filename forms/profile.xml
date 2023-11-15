@@ -54,9 +54,7 @@
                 required="true"
                 default="Staff"
             >
-                <!--<option value="">PLG_USER_STAFFPROFILE_INTERNAL_FIELD_DISPLAYGROUP_OPTION_0</option>-->
                 <option value="Director">Director</option>
-                <!--<option value="Senior staff">Senior staff</option>-->
                 <option value="Staff">Staff</option>
                 <option value="Visitors and students">Visitors and students</option>
             </field>
@@ -71,18 +69,6 @@
                 size="36"
                 required="true"
             />
-            <!--<field
-                name="strapline"
-                id="strapline"
-                type="textarea"
-                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_STRAPLINE_LABEL"
-                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_STRAPLINE_DESC"
-                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_STRAPLINE_MESSAGE"
-                filter="string"
-                rows="2"
-                cols="50"
-                required="true"
-            />-->
             <field
                 name="title"
                 id="title"
@@ -143,46 +129,6 @@
                 pattern="[A-z0-9_-]+"
             />
         </fieldset>
-        <!--<fieldset name="avatar"
-            label="PLG_USER_STAFFPROFILE_AVATAR_TITLE"
-        >
-            <field
-                name="avatar_img"
-                id="avatar_img"
-                type="imageedit"
-                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_LABEL"
-                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_DESC"
-                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_MESSAGE"
-            />
-            <field
-                name="use_gravatar"
-                id="use_gravatar"
-                type="checkboxdefault"
-                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_USE_GRAVATAR_LABEL"
-                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_USE_GRAVATAR_DESC"
-                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_USE_GRAVATAR_MESSAGE"
-                default="0"
-                class="push-down"
-            />
-            <field
-                name="gravatar_img"
-                id="gravatar_img"
-                type="gravatar"
-                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAR_LABEL"
-                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAR_DESC"
-                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAR_MESSAGE"
-            />
-            <field
-                name="gravatar_email"
-                id="gravatar_email"
-                type="text"
-                label="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAREMAIL_LABEL"
-                description="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAREMAIL_DESC"
-                message="PLG_USER_STAFFPROFILE_PUBLIC_FIELD_GRAVATAREMAIL_MESSAGE"
-                filter="string"
-                size="30"
-            />
-        </fieldset>-->
         <fieldset
             name="biography_fields"
             label="PLG_USER_STAFFPROFILE_BIOG_TITLE"

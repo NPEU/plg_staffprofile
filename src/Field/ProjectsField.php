@@ -1,24 +1,20 @@
 <?php
-/**
- * @package     ProjectsList
- * @subpackage  plg_user_staffprofile
- * @copyright   Copyright (C) 2012 Andy Kirk.
- * @author      Andy Kirk
- * @license     License GNU General Public License version 2 or later
- */
+namespace NPEU\Plugin\User\StaffProfile\Field;
 
-// No direct access
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Field\ListField;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\Database\DatabaseInterface;
+
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
-
 /**
- * Form Field class for the Joomla Framework.
- *
- * @package     Extras
- * @subpackage  com_extras
+ * Form field for a list of admin groups.
  */
-class JFormFieldProjects extends JFormFieldList
+class Projects extends ListField
 {
     /**
      * The form field type.
@@ -35,11 +31,11 @@ class JFormFieldProjects extends JFormFieldList
     protected function getOptions()
     {
         // Load  language in case this is used for other extensions
-        $lang = JFactory::getLanguage();
+        $lang = Factory::getLanguage();
         $lang->load('com_projects', JPATH_ADMINISTRATOR);
 
         $options = array();
-        $db = JFactory::getDBO();
+        $db = Factory::getDBO();
         $q  = 'SELECT c.id, c.title ';
         $q .= 'FROM `#__categories` c ';
         $q .= 'JOIN `#__fields_values` fv ON c.id = fv.item_id ';
@@ -51,7 +47,7 @@ class JFormFieldProjects extends JFormFieldList
 
         $db->setQuery($q);
         if (!$db->execute($q)) {
-            JError::raiseError( 500, $db->stderr() );
+            throw new GenericDataException(implode("\n", $errors), 500);
             return false;
         }
 
@@ -61,7 +57,7 @@ class JFormFieldProjects extends JFormFieldList
 
         $i = 0;
         foreach ($projects as $project) {
-            $options[] = JHtml::_('select.option', $project['id'], $project['title']);
+            $options[] = HTMLHelper::_('select.option', $project['id'], $project['title']);
             $i++;
         }
         if ($i > 0) {
@@ -69,7 +65,7 @@ class JFormFieldProjects extends JFormFieldList
             $options = array_merge(parent::getOptions(), $options);
         } else {
             $options = parent::getOptions();
-            $options[0]->text = JText::_('PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_NO_PROJECTS');
+            $options[0]->text = Text::_('PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_NO_PROJECTS');
         }
         return $options;
     }

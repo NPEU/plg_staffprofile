@@ -1,44 +1,70 @@
 <?php
 /**
  * @package     Joomla.Plugin
- * @subpackage  user.plg_staffprofile
+ * @subpackage  User.StaffProfile
  *
- * @copyright   Copyright (C) 2012 Andy Kirk.
- * @author      Andy Kirk
- * @license     License GNU General Public License version 2 or later
+ * @copyright   Copyright (C) NPEU 2023.
+ * @license     MIT License; see LICENSE.md
  */
+
+namespace NPEU\Plugin\User\StaffProfile\Extension;
 
 defined('_JEXEC') or die;
 
-#ini_set('display_errors', 1);
-#ini_set('display_startup_errors', 1);
-#error_reporting(E_ALL);
-
-
-$app     = JFactory::getApplication();
-$jinput  = $app->input;
-$task    = $jinput->get('task');
-$view    = $jinput->get('view');
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\User\User;
+use Joomla\Event\Event;
+use Joomla\Event\SubscriberInterface;
+use Joomla\Registry\Registry;
+use Joomla\Utilities\ArrayHelper;
 
 /**
- * A plugin to to new profile fields for staff members.
- *
+ * NPEU User Staff Profile plugin.
  */
-class plgUserStaffProfile extends JPlugin {
-    protected $staff_group_id;
-    protected $avatar_dir;
-    #protected $avatar_size;
+// Note the SubscriberInterface and corresponding getSubscribedEvents() method seem to be a problem
+// in the context of a Profile plugin as the UserHelper sends a reference to the data which is
+// expected to be modified by the Profile plugins, but the getSubscribedEvents seems to break this
+// connection as the $data that gets passedfrom the helper gets put into an Event object, and not
+// passed directly.
+class StaffProfile extends CMSPlugin implements SubscriberInterface
+#class StaffProfile extends CMSPlugin
+{
+    protected $autoloadLanguage = false;
+
+    /**
+     * An internal flag whether plugin should listen any event.
+     *
+     * @var bool
+     *
+     * @since   4.3.0
+     */
+    protected static $enabled = false;
 
     /**
      * Constructor
      *
      */
-    public function __construct(&$subject, $config) {
+    public function __construct($subject, array $config = [], bool $enabled = true)
+    {
+        // The above enabled parameter was taken from teh Guided Tour plugin but it ir always seems
+        // to be false so I'm not sure where this param is passed from. Overriding it for now.
+        $enabled = true;
+
+        #$this->loadLanguage();
+        $this->autoloadLanguage = $enabled;
+        self::$enabled          = $enabled;
 
         parent::__construct($subject, $config);
-        $this->loadLanguage();
 
-        $db    = JFactory::getDBO();
+        $db    = Factory::getDBO();
         $query = $db->getQuery(true);
 
         // Count the objects in the user group.
@@ -50,9 +76,8 @@ class plgUserStaffProfile extends JPlugin {
         $result = $db->loadResult();
         // Returning here is fine:
         #return;
-        #echo "<pre>\n"; var_dump($result); echo "</pre>\n";
-        #echo "<pre>\n"; var_dump($this->staff_group_id); echo "</pre>\n";
         $this->staff_group_id = (int) $result;
+        #echo "<pre>\n"; var_dump($this->staff_group_id); echo "</pre>\n";exit;
 
         // Returning here is not! (WHY?!?!?
         #return;
@@ -60,12 +85,12 @@ class plgUserStaffProfile extends JPlugin {
             return;
         }
 
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         // @TODO - investigate using a modal that's already available in admin. Not sure why I have
         // to load this:
         if ($app->isClient('administrator')) {
             // Add modal script (Squeezebox) for admin
-            $doc = JFactory::getDocument();
+            $doc = Factory::getDocument();
             $doc->addScript('/media/system/js/mootools-core.js');
             $doc->addScript('/media/system/js/mootools-more.js');
             $doc->addScript('/media/system/js/modal.js');
@@ -113,16 +138,43 @@ class plgUserStaffProfile extends JPlugin {
                 chown($avatar_dir, $upload_file_owner);
             }
         } else {
-            JError::raiseWarning(100, JText::_('PLG_USER_STAFFPROFILE_ERROR_FILE_NO_AVATAR_DIR'));
+            throw new GenericDataException(JText::_('PLG_USER_STAFFPROFILE_ERROR_FILE_NO_AVATAR_DIR'), 100);
         }
+
+        #echo "<pre>\n"; var_dump($this->avatar_dir); echo "</pre>\n";exit;
+    }
+
+    /**
+     * function for getSubscribedEvents : new Joomla 4 feature
+     *
+     * @return array
+     *
+     * @since   4.3.0
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return self::$enabled ? [
+            'onContentPrepareData' => 'onContentPrepareData',
+            'onContentPrepareForm' => 'onContentPrepareForm',
+            'onUserAfterSave'      => 'onUserAfterSave',
+            'onUserAfterDelete'    => 'onUserAfterDelete'
+        ] : [];
     }
 
     /**
      * onContentPrepareData
+     *
+     * @param   string  $context  The context for the data
+     * @param   object  $data     An object containing the data for the form.
+     *
+     * @return  boolean
      */
-    public function onContentPrepareData($context, $data) {
-        #echo "<pre>\n"; var_dump($context); echo "</pre>\n";#exit;
-        #echo "<pre>\n"; var_dump($data); echo "</pre>\n";exit;
+    #public function onContentPrepareData($context, $data) {
+    public function onContentPrepareData(Event $event) {
+        $args    = $event->getArguments();
+        $context = $args[0];
+        $data    = $args[1];
+
         // Check we are manipulating a valid form.
         if (!in_array($context, array('com_users.profile', 'com_users.user', 'com_admin.profile'))) {
             return true;
@@ -134,7 +186,7 @@ class plgUserStaffProfile extends JPlugin {
             if (!isset($data->profile) and $user_id > 0) {
                 #$data->staff_profile = false;
                 // Check the user is a staff member before adding this profile:
-                $groups = JFactory::getUser($user_id)->getAuthorisedGroups();
+                $groups = Factory::getUser($user_id)->getAuthorisedGroups();
                 #echo "<pre>\n"; var_dump($groups); echo "</pre>\n";exit;
                 if (!in_array($this->staff_group_id, $groups)) {
                     return true;
@@ -145,12 +197,12 @@ class plgUserStaffProfile extends JPlugin {
                 // the whole user object. We need the email address in this plugin, so it's not
                 // present, we need to get it:
                 if (!isset($data->email)) {
-                    $user = new JUser($data->id);
+                    $user = new User($data->id);
                     $data->email = $user->get('email');
                 }
 
                 // Load the profile data from the database.
-                $db = JFactory::getDbo();
+                $db = Factory::getDbo();
                 $db->setQuery(
                     'SELECT profile_key, profile_value FROM #__user_profiles' .
                     ' WHERE user_id = '.(int) $user_id." AND profile_key LIKE 'staffprofile.%'" .
@@ -159,9 +211,8 @@ class plgUserStaffProfile extends JPlugin {
 
                 try {
                     $results = $db->loadRowList();
-                }
-                catch (RuntimeException $e) {
-                    $this->_subject->setError($e->getMessage());
+                } catch (RuntimeException $e) {
+                    throw new GenericDataException($e->getErrorMsg(), 500);
                     return false;
                 }
 
@@ -172,14 +223,14 @@ class plgUserStaffProfile extends JPlugin {
                 foreach ($results as $v) {
                     $k = str_replace('staffprofile.', '', $v[0]);
                     $data->profile[$k] = json_decode($v[1], true);
-                    if ($data->profile[$k] === null)
-                    {
+                    if ($data->profile[$k] === null) {
                         $data->profile[$k] = $v[1];
                     }
                 }
                 // Add alias stuff:
                 // (regenerate this every time in case of name change)
-                $alias = JApplication::stringURLSafe($data->name) . '-' . $data->id;
+                $alias = OutputFilter::stringURLSafe($data->name) . '-' . $data->id;
+
                 $data->profile['alias'] = $alias;
 
 
@@ -191,20 +242,20 @@ class plgUserStaffProfile extends JPlugin {
                     #echo "<pre>\n"; var_dump($data->profile['imageedit']); echo "</pre>\n"; exit;
                 }
 
-                if (!JHtml::isRegistered('users.imageedit')) {
-                    JHtml::register('users.imageedit', array(__CLASS__, 'imageedit'));
+                if (!HTMLHelper::isRegistered('users.imageedit')) {
+                    HTMLHelper::register('users.imageedit', array(__CLASS__, 'imageedit'));
                 }
 
-                #echo "<pre>\n"; var_dump(JFactory::getApplication()->input); echo "</pre>\n";exit;
-                $path = JUri::getInstance()->getPath();
-                #echo "<pre>\n"; var_dump($juri = JUri::getInstance()); echo "</pre>\n";exit;
+                #echo "<pre>\n"; var_dump(Factory::getApplication()->input); echo "</pre>\n";exit;
+                $path = Uri::getInstance()->getPath();
+                #echo "<pre>\n"; var_dump($Uri = Uri::getInstance()); echo "</pre>\n";exit;
                 #echo "<pre>\n"; var_dump($path); echo "</pre>\n";exit;
                 #echo "<pre>\n"; var_dump(preg_match('#/user-profile-edit/\d+#', $path)); echo "</pre>\n";exit;
                 // Article stuff:
                 $is_edit = true;
                 if (
-                    (!JFactory::getApplication()->input->get('layout')
-                 || JFactory::getApplication()->input->get('layout') != 'edit')
+                    (!Factory::getApplication()->input->get('layout')
+                 || Factory::getApplication()->input->get('layout') != 'edit')
                  && preg_match('#/user-profile-edit/\d+#', $path) === 0
                 ) {
                     $is_edit = false;
@@ -223,8 +274,8 @@ class plgUserStaffProfile extends JPlugin {
     public static function imageedit($value) {
 
         // On the front end the params don't seem to get auto-loaded, so check for that:
-        $plugin       = JPluginHelper::getPlugin('user', 'staffprofile');
-        $params = new JRegistry($plugin->params);
+        $plugin       = PluginHelper::getPlugin('user', 'staffprofile');
+        $params = new Registry($plugin->params);
 
         // This function appears to be passed the user alias, but I've no idea
         // why or where it's being called, so hack the correct value:
@@ -242,10 +293,13 @@ class plgUserStaffProfile extends JPlugin {
     /**
      * onContentPrepareForm
      */
-    public function onContentPrepareForm($form, $data) {
-        #echo "<pre>\n"; var_dump($data); echo "</pre>\n"; exit;
-        if (!($form instanceof JForm)) {
-            $this->_subject->setError('JERROR_NOT_A_FORM');
+    public function onContentPrepareForm(Event $event) {
+        $args    = $event->getArguments();
+        $form    = $args[0];
+        $data    = $args[1];
+
+        if (!($form instanceof \Joomla\CMS\Form\Form)) {
+            throw new GenericDataException(Text::_('JERROR_NOT_A_FORM'), 500);
             return false;
         }
 
@@ -256,12 +310,12 @@ class plgUserStaffProfile extends JPlugin {
             return true;
         }
 
-        $user_id = JFactory::getApplication()->input->get('id', 0);
+        $user_id = Factory::getApplication()->input->get('id', 0);
 
         if (is_object($data)) {
             $user_id = $data->id;
         }
-        $groups = JFactory::getUser($user_id)->getAuthorisedGroups();
+        $groups = Factory::getUser($user_id)->getAuthorisedGroups();
 
         if (!in_array($this->staff_group_id, $groups)) {
             return true;
@@ -270,18 +324,18 @@ class plgUserStaffProfile extends JPlugin {
         #echo "<pre>\n"; var_dump(dirname(__FILE__) . '/profiles'); echo "</pre>\n"; exit;
 
         // Add the profile fields to the form.
-        JForm::addFormPath(dirname(__FILE__) . '/profiles');
+        Form::addFormPath(dirname(__FILE__) . '/profiles');
         $form->loadFile('profile', false);
         #echo "<pre>\n"; var_dump($form); echo "</pre>\n"; exit;
 
         // Add fields:
-        JForm::addFieldPath(dirname(__FILE__).'/fields');
+        Form::addFieldPath(dirname(__FILE__).'/fields');
 
         // Hacky stuff to add save handler for editor:
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         if ($app->isClient('administrator')) {
             //return true;
-            $doc = JFactory::getDocument();
+            $doc = Factory::getDocument();
             $script = array();
 
             $context = 'profile';
@@ -309,11 +363,11 @@ class plgUserStaffProfile extends JPlugin {
      */
     function onUserAfterSave($data, $isNew, $result, $error) {
         #echo "<pre>\n"; var_dump($data); echo "</pre>\n"; exit;
-        $user_id = JArrayHelper::getValue($data, 'id', 0, 'int');
+        $user_id = ArrayHelper::getValue($data, 'id', 0, 'int');
 
         if ($user_id && $result && isset($data['profile']) && (count($data['profile']))) {
             try {
-                $db = JFactory::getDbo();
+                $db = Factory::getDbo();
                 $db->setQuery(
                     'DELETE FROM #__user_profiles WHERE user_id = '.$user_id .
                     " AND profile_key LIKE 'staffprofile.%'"
@@ -335,7 +389,7 @@ class plgUserStaffProfile extends JPlugin {
                 #echo "<pre>\n"; var_dump($data); echo "</pre>\n"; exit;
             }
             catch (RuntimeException $e) {
-                $this->_subject->setError($e->getMessage());
+                throw new GenericDataException($e->getErrorMsg(), 500);
                 return false;
             }
         }
@@ -355,11 +409,11 @@ class plgUserStaffProfile extends JPlugin {
             return false;
         }
 
-        $user_id = JArrayHelper::getValue($user, 'id', 0, 'int');
+        $user_id = ArrayHelper::getValue($user, 'id', 0, 'int');
 
         if ($user_id) {
             try {
-                $db = JFactory::getDbo();
+                $db = Factory::getDbo();
                 $db->setQuery(
                     'DELETE FROM #__user_profiles WHERE user_id = '.$user_id .
                     " AND profile_key LIKE 'staffprofile.%'"
@@ -368,7 +422,7 @@ class plgUserStaffProfile extends JPlugin {
                 $db->execute();
             }
             catch (Exception $e) {
-                $this->_subject->setError($e->getMessage());
+                throw new GenericDataException($e->getErrorMsg(), 500);
                 return false;
             }
         }
