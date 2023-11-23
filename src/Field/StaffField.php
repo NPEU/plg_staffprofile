@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 /**
  * Form field for a list of admin groups.
  */
-class Projects extends ListField
+class StaffField extends ListField
 {
     /**
      * The form field type.
@@ -23,6 +23,7 @@ class Projects extends ListField
      */
     protected $type = 'Staff';
 
+    protected $layout = 'joomla.form.field.list-fancy-select';
     /**
      * Method to get the field options.
      *
@@ -31,9 +32,9 @@ class Projects extends ListField
     protected function getOptions()
     {
         // Load  language in case this is used for other extensions
-        $lang = Factory::getLanguage();
-        $lang->load('com_projects', JPATH_ADMINISTRATOR);
-
+        //$lang = Factory::getLanguage();
+        //$lang->load('com_projects', JPATH_ADMINISTRATOR);
+        #echo "<pre>\n"; var_dump('wer'); echo "</pre>\n"; exit;
         $options = array();
         $db = Factory::getDBO();
         $q  = 'SELECT u.id, u.name, up1.profile_value AS first_name, up2.profile_value AS last_name ';
@@ -70,4 +71,5 @@ class Projects extends ListField
         }
         return $options;
     }
+
 }

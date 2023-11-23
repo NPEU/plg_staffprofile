@@ -4,11 +4,8 @@
         <fieldset
             name="internal_fields"
             label="PLG_USER_STAFFPROFILE_INTERNAL_TITLE"
+            description="PLG_USER_STAFFPROFILE_INTERNAL_MESSAGE"
         >
-           <field
-                type="editmsg"
-                label="PLG_USER_STAFFPROFILE_INTERNAL_MESSAGE"
-            />
             <field
                 name="tel"
                 id="tel"
@@ -178,7 +175,6 @@
                 type="edithelp"
                 heading="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_HELP_HEADING"
                 content="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_HELP"
-                class="u-space--above--s"
             />
         </fieldset>
         <fieldset
@@ -235,7 +231,6 @@
                 name="projects"
                 id="projects"
                 type="projects"
-                extension="com_content"
                 multiple="true"
                 label="PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_LABEL"
                 description="PLG_USER_STAFFPROFILE_PROJECTS_FIELD_PROJECTS_DESC"

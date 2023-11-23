@@ -5,6 +5,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Form\Field\UsergrouplistField;
+use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -17,7 +18,7 @@ defined('_JEXEC') or die;
 /**
  * Form field for a list of admin groups.
  */
-class ImageEditField extends Field
+class ImageEditField extends FormField
 {
     /**
      * The form field type.
@@ -123,8 +124,26 @@ class ImageEditField extends Field
 
             $imageedit_path = '/plugins/user/staffprofile/libraries/ImageEdit/j-image-edit.php?savename=' . $this->savename . '&amp;savedir=' . $this->savepath . '&amp;el_id=' . $this->el_id . '&isadmin=' . ($app->isClient('administrator') ? '1' : '0');
 
+
             if ($app->isClient('administrator')) {
-                $output .= '<button type="button" class="btn btn-primary" onclick="SqueezeBox.fromElement(this, {handler:\'iframe\', size: {x: 700, y: 600}, url:\'' . $imageedit_path .'\'})"> ' . Text::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
+
+                $output .= HTMLHelper::_(
+                    'bootstrap.renderModal',
+                    'imageEditModal',
+                    [
+                        'title'       => 'Profile Image',
+                        'backdrop'    => 'static',
+                        'keyboard'    => false,
+                        'closeButton' => false,
+                        'bodyHeight'  => '70',
+                        'modalWidth'  => '80',
+                        'footer'      => '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-target="#closeBtn">'. Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>',
+                        'url' => $imageedit_path
+                    ]
+                );
+
+                #$output .= '<button type="button" class="btn btn-primary" onclick="SqueezeBox.fromElement(this, {handler:\'iframe\', size: {x: 700, y: 600}, url:\'' . $imageedit_path .'\'})"> ' . Text::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
+                $output .= '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageEditModal">' . Text::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
             } else {
                 $output .= '<button type="button" class="btn btn-primary" onclick="document.getElementById(\'avatar-image-editor\').setAttribute(\'src\', \'' . $imageedit_path . '\')" data-a11y-dialog-show="avatar-dialog"> ' . Text::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
             }
@@ -132,6 +151,10 @@ class ImageEditField extends Field
 
             $output .= '<button type="button" class="btn" onclick="document.getElementById(\'' . $this->el_id . '-preview\').src=\'' .  $this->savepath  . '/' . $this->default_src . '\';document.getElementById(\'' . $this->savename . '\').value=\'\'">Remove image</button>';
         }
+
+
+
+
         return $output;
     }
 

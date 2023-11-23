@@ -4,6 +4,7 @@ namespace NPEU\Plugin\User\StaffProfile\Field;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\UsergrouplistField;
+use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -16,7 +17,7 @@ defined('_JEXEC') or die;
 /**
  * Form field for a list of admin groups.
  */
-class EditHelpField extends Field
+class EditHelpField extends FormField
 {
     /**
      * The form field type.

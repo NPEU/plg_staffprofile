@@ -12,9 +12,9 @@ use Joomla\Database\DatabaseInterface;
 defined('_JEXEC') or die;
 
 /**
- * Form field for a list of admin groups.
+ * Form field for a list of NPEU projects.
  */
-class Projects extends ListField
+class ProjectsField extends ListField
 {
     /**
      * The form field type.
@@ -22,6 +22,8 @@ class Projects extends ListField
      * @var     string
      */
     protected $type = 'Projects';
+
+    protected $layout = 'joomla.form.field.list-fancy-select';
 
     /**
      * Method to get the field options.
@@ -31,10 +33,10 @@ class Projects extends ListField
     protected function getOptions()
     {
         // Load  language in case this is used for other extensions
-        $lang = Factory::getLanguage();
-        $lang->load('com_projects', JPATH_ADMINISTRATOR);
-
-        $options = array();
+        //$lang = Factory::getLanguage();
+        //$lang->load('com_projects', JPATH_ADMINISTRATOR);
+        #echo "<pre>\n"; var_dump('wer'); echo "</pre>\n"; exit;
+        $options = [];
         $db = Factory::getDBO();
         $q  = 'SELECT c.id, c.title ';
         $q .= 'FROM `#__categories` c ';
@@ -52,8 +54,6 @@ class Projects extends ListField
         }
 
         $projects = $db->loadAssocList();
-
-        #echo "<pre>\n"; var_dump($projects); echo "</pre>\n"; exit;
 
         $i = 0;
         foreach ($projects as $project) {

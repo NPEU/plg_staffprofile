@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -25,6 +26,8 @@ use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+
+//use NPEU\Plugin\User\StaffProfile\Field;
 
 /**
  * NPEU User Staff Profile plugin.
@@ -58,12 +61,10 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
         // to be false so I'm not sure where this param is passed from. Overriding it for now.
         $enabled = true;
 
-        #$this->loadLanguage();
         $this->autoloadLanguage = $enabled;
         self::$enabled          = $enabled;
 
         parent::__construct($subject, $config);
-
         $db    = Factory::getDBO();
         $query = $db->getQuery(true);
 
@@ -77,50 +78,11 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
         // Returning here is fine:
         #return;
         $this->staff_group_id = (int) $result;
-        #echo "<pre>\n"; var_dump($this->staff_group_id); echo "</pre>\n";exit;
 
         // Returning here is not! (WHY?!?!?
         #return;
         if ($this->staff_group_id == 0) {
             return;
-        }
-
-        $app = Factory::getApplication();
-        // @TODO - investigate using a modal that's already available in admin. Not sure why I have
-        // to load this:
-        if ($app->isClient('administrator')) {
-            // Add modal script (Squeezebox) for admin
-            $doc = Factory::getDocument();
-            $doc->addScript('/media/system/js/mootools-core.js');
-            $doc->addScript('/media/system/js/mootools-more.js');
-            $doc->addScript('/media/system/js/modal.js');
-
-            $doc->addScriptDeclaration("
-                jQuery(function($) {
-                    SqueezeBox.initialize({});
-                    SqueezeBox.assign($('a.modal').get(), {
-                        parse: 'rel'
-                    });
-                });
-            ");
-
-            $doc->addStyleDeclaration('
-                #sbox-overlay[aria-hidden="false"] {
-                    background-color: #000000;
-                    height: 3337px;
-                    left: 0;
-                    position: absolute;
-                    top: -20px;
-                    width: 100%;
-                }
-                #sbox-window[aria-hidden="false"] {
-                    left: 50% !important;
-                    margin-left: -350px;
-                    position: fixed;
-                    top: 50px !important;
-                    padding: 0 !important;
-                }
-            ');
         }
 
         $avatar_dir              = $this->params->get('avatar_dir', false);
@@ -140,8 +102,6 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
         } else {
             throw new GenericDataException(JText::_('PLG_USER_STAFFPROFILE_ERROR_FILE_NO_AVATAR_DIR'), 100);
         }
-
-        #echo "<pre>\n"; var_dump($this->avatar_dir); echo "</pre>\n";exit;
     }
 
     /**
@@ -170,28 +130,25 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
      * @return  boolean
      */
     #public function onContentPrepareData($context, $data) {
-    public function onContentPrepareData(Event $event) {
-        $args    = $event->getArguments();
-        $context = $args[0];
-        $data    = $args[1];
+    public function onContentPrepareData(Event $event): void
+    {
+        [$context, $data] = array_values($event->getArguments());
 
         // Check we are manipulating a valid form.
-        if (!in_array($context, array('com_users.profile', 'com_users.user', 'com_admin.profile'))) {
-            return true;
+        if (!in_array($context, ['com_users.profile', 'com_users.user', 'com_admin.profile'])) {
+            return;
         }
 
         if (is_object($data)) {
             $user_id = isset($data->id) ? $data->id : 0;
 
             if (!isset($data->profile) and $user_id > 0) {
-                #$data->staff_profile = false;
                 // Check the user is a staff member before adding this profile:
                 $groups = Factory::getUser($user_id)->getAuthorisedGroups();
                 #echo "<pre>\n"; var_dump($groups); echo "</pre>\n";exit;
                 if (!in_array($this->staff_group_id, $groups)) {
-                    return true;
+                    return;
                 }
-                #$data->staff_profile = true;
 
                 // Sometimes this event handler is passed JUST the user_id, other times it's passed
                 // the whole user object. We need the email address in this plugin, so it's not
@@ -213,11 +170,11 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
                     $results = $db->loadRowList();
                 } catch (RuntimeException $e) {
                     throw new GenericDataException($e->getErrorMsg(), 500);
-                    return false;
+                    return;
                 }
 
                 if (!isset($data->profile)) {
-                    $data->profile = array();
+                    $data->profile = [];
                 }
 
                 foreach ($results as $v) {
@@ -236,21 +193,14 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
 
                 // Add ImageEdit stuff:
                 if (!isset($data->profile['avatar_img'])) {
-                    #$data->profile['avatar_img'] = $alias . '-avatar';
                     $data->profile['avatar_img'] = '/img/avatars/' . $alias . '-avatar.jpg';
-                    #$data->profile['avatar_img'] = urldecode(str_replace(' ', '_', $data->name) . '_' . $data->id);
-                    #echo "<pre>\n"; var_dump($data->profile['imageedit']); echo "</pre>\n"; exit;
                 }
 
                 if (!HTMLHelper::isRegistered('users.imageedit')) {
-                    HTMLHelper::register('users.imageedit', array(__CLASS__, 'imageedit'));
+                    HTMLHelper::register('users.imageedit', [__CLASS__, 'imageedit']);
                 }
-
-                #echo "<pre>\n"; var_dump(Factory::getApplication()->input); echo "</pre>\n";exit;
                 $path = Uri::getInstance()->getPath();
-                #echo "<pre>\n"; var_dump($Uri = Uri::getInstance()); echo "</pre>\n";exit;
-                #echo "<pre>\n"; var_dump($path); echo "</pre>\n";exit;
-                #echo "<pre>\n"; var_dump(preg_match('#/user-profile-edit/\d+#', $path)); echo "</pre>\n";exit;
+
                 // Article stuff:
                 $is_edit = true;
                 if (
@@ -260,14 +210,9 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
                 ) {
                     $is_edit = false;
                 }
-
-                #echo "<pre>\n"; var_dump($is_edit); echo "</pre>\n";
-                #echo "<pre>\n"; var_dump($data); echo "</pre>\n";
-
             }
         }
-        #echo "<pre>\n"; var_dump($data); echo "</pre>\n"; exit;
-        return true;
+        return;
     }
 
     // Add ImageEdit stuff:
@@ -293,21 +238,20 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
     /**
      * onContentPrepareForm
      */
-    public function onContentPrepareForm(Event $event) {
-        $args    = $event->getArguments();
-        $form    = $args[0];
-        $data    = $args[1];
+    public function onContentPrepareForm(Event $event): void
+    {
+        [$form, $data] = array_values($event->getArguments());
 
         if (!($form instanceof \Joomla\CMS\Form\Form)) {
             throw new GenericDataException(Text::_('JERROR_NOT_A_FORM'), 500);
-            return false;
+            return;
         }
 
         // Check we are manipulating a valid form.
         $name = $form->getName();
 
-        if (!in_array($name, array('com_admin.profile', 'com_users.user', 'com_users.profile'))) {
-            return true;
+        if (!in_array($name, ['com_admin.profile', 'com_users.user', 'com_users.profile'])) {
+            return;
         }
 
         $user_id = Factory::getApplication()->input->get('id', 0);
@@ -318,54 +262,29 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
         $groups = Factory::getUser($user_id)->getAuthorisedGroups();
 
         if (!in_array($this->staff_group_id, $groups)) {
-            return true;
+            return;
         }
-        #echo "<pre>\n"; var_dump($form); echo "</pre>\n";# exit;
-        #echo "<pre>\n"; var_dump(dirname(__FILE__) . '/profiles'); echo "</pre>\n"; exit;
+        $plg_dir = dirname(dirname(dirname(__FILE__)));
 
         // Add the profile fields to the form.
-        Form::addFormPath(dirname(__FILE__) . '/profiles');
+        FormHelper::addFieldPrefix('NPEU\\Plugin\\User\\StaffProfile\\Field');
+        FormHelper::addFormPath($plg_dir . '/forms');
+
         $form->loadFile('profile', false);
-        #echo "<pre>\n"; var_dump($form); echo "</pre>\n"; exit;
 
-        // Add fields:
-        Form::addFieldPath(dirname(__FILE__).'/fields');
-
-        // Hacky stuff to add save handler for editor:
-        $app = Factory::getApplication();
-        if ($app->isClient('administrator')) {
-            //return true;
-            $doc = Factory::getDocument();
-            $script = array();
-
-            $context = 'profile';
-            if ($app->input->get('option', false) == 'com_users') {
-                $context = 'user';
-            }
-
-            $style = array();
-
-            $style[] = '.form-horizontal .control-label {';
-            $style[] = '    width: 160px;';
-            $style[] = '}';
-
-            $str = implode("\n", $style);
-
-            $doc->addStyleDeclaration($str);
-        }
-        #return false;
-        return true;
+        return;
     }
 
 
     /**
      * onUserAfterSave
      */
-    function onUserAfterSave($data, $isNew, $result, $error) {
-        #echo "<pre>\n"; var_dump($data); echo "</pre>\n"; exit;
+    public function onUserAfterSave(Event $event): void
+    {
+        [$data, $isnew, $success, $msg] = array_values($event->getArguments());
         $user_id = ArrayHelper::getValue($data, 'id', 0, 'int');
 
-        if ($user_id && $result && isset($data['profile']) && (count($data['profile']))) {
+        if ($user_id && $success && isset($data['profile']) && (count($data['profile']))) {
             try {
                 $db = Factory::getDbo();
                 $db->setQuery(
@@ -374,7 +293,7 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
                 );
                 $db->execute();
 
-                $tuples = array();
+                $tuples = [];
                 $order  = 1;
 
                 foreach ($data['profile'] as $k => $v) {
@@ -386,15 +305,14 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
 
                 $db->setQuery('INSERT INTO #__user_profiles VALUES '.implode(', ', $tuples));
                 $db->execute();
-                #echo "<pre>\n"; var_dump($data); echo "</pre>\n"; exit;
             }
             catch (RuntimeException $e) {
                 throw new GenericDataException($e->getErrorMsg(), 500);
-                return false;
+                return;
             }
         }
 
-        return true;
+        return;
     }
 
     /**
@@ -403,10 +321,12 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
      * Method is called after user data is deleted from the database
      *
      */
-    public function onUserAfterDelete($user, $success, $msg) {
+    public function onUserAfterDelete(Event $event): void
+    {
+        [$user, $success, $msg] = array_values($event->getArguments());
 
         if (!$success) {
-            return false;
+            return;
         }
 
         $user_id = ArrayHelper::getValue($user, 'id', 0, 'int');
@@ -423,10 +343,10 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
             }
             catch (Exception $e) {
                 throw new GenericDataException($e->getErrorMsg(), 500);
-                return false;
+                return;
             }
         }
 
-        return true;
+        return;
     }
 }
