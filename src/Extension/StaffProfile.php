@@ -124,8 +124,7 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
     /**
      * onContentPrepareData
      *
-     * @param   string  $context  The context for the data
-     * @param   object  $data     An object containing the data for the form.
+     * @param   Event  $event
      *
      * @return  boolean
      */
@@ -237,6 +236,8 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
 
     /**
      * onContentPrepareForm
+     *
+     * @param   Event  $event
      */
     public function onContentPrepareForm(Event $event): void
     {
@@ -278,6 +279,8 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
 
     /**
      * onUserAfterSave
+     *
+     * @param   Event  $event
      */
     public function onUserAfterSave(Event $event): void
     {
@@ -319,6 +322,8 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
      * Remove all user profile information for the given user ID
      *
      * Method is called after user data is deleted from the database
+     *
+     * @param   Event  $event
      *
      */
     public function onUserAfterDelete(Event $event): void
