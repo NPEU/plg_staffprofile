@@ -265,11 +265,10 @@ class StaffProfile extends CMSPlugin implements SubscriberInterface
         if (!in_array($this->staff_group_id, $groups)) {
             return;
         }
-        $plg_dir = dirname(dirname(dirname(__FILE__)));
 
         // Add the profile fields to the form.
         FormHelper::addFieldPrefix('NPEU\\Plugin\\User\\StaffProfile\\Field');
-        FormHelper::addFormPath($plg_dir . '/forms');
+        FormHelper::addFormPath(dirname(dirname(__DIR__)) . '/forms');
 
         $form->loadFile('profile', false);
 
