@@ -38,14 +38,10 @@ class ProjectsField extends ListField
         #echo "<pre>\n"; var_dump('wer'); echo "</pre>\n"; exit;
         $options = [];
         $db = Factory::getDBO();
-        $q  = 'SELECT c.id, c.title ';
-        $q .= 'FROM `#__categories` c ';
-        $q .= 'JOIN `#__fields_values` fv ON c.id = fv.item_id ';
-        $q .= 'WHERE fv.field_id = 6 '; // Note this hard-coded value isn't robust/transferable.
-        $q .= 'AND fv.value = "yes" ';
-        $q .= 'AND c.published = 1 ';
-        $q .= 'AND c.access = 1 ';
-        $q .= 'ORDER BY c.title;';
+        $q  = 'SELECT id, name as title ';
+        $q .= 'FROM `#__brands` ';
+        $q .= 'WHERE catid = 171 '; // Note this hard-coded value isn't robust/transferable.
+        $q .= 'ORDER BY name;';
 
         $db->setQuery($q);
         if (!$db->execute($q)) {
