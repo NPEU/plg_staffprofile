@@ -6,7 +6,7 @@
         <element>staffprofile</element>
         <type>plugin</type>
         <folder>user</folder>
-        <version>2.4.0</version>
+        <version>4.0.0</version>
         <client>site</client>
         <infourl title="NPEU: plg_staffprofile">https://github.com/NPEU/plg_staffprofile/releases/tag/v2.4.0</infourl>
         <downloads>
