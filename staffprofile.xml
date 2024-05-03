@@ -27,10 +27,11 @@
 
     <namespace path="src">NPEU\Plugin\User\StaffProfile</namespace>
     <files>
-        <folder>services</folder>
         <folder plugin="staffprofile">src</folder>
+        <folder>forms</folder>
         <folder>language</folder>
         <folder>libraries</folder>
+        <folder>services</folder>
         <folder>sql</folder>
     </files>
 
