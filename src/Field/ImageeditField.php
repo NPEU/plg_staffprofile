@@ -1,22 +1,24 @@
 <?php
-/**
- * @package     Joomla.Plugins
- * @subpackage  plg_staff_profile
- *
- * @copyright   Copyright (C) 2013 Andy Kirk.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+namespace NPEU\Plugin\User\StaffProfile\Field;
 
-defined('JPATH_BASE') or die;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Form\Field\UsergrouplistField;
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Registry\Registry;
+
+defined('_JEXEC') or die;
 
 /**
- * Pseudo form field that displays an avatar.
- *
- * @package     Joomla.Platform
- * @subpackage  Form
- * @since       11.3
+ * Form field for a list of admin groups.
  */
-class JFormFieldImageEdit extends JFormField
+class ImageEditField extends FormField
 {
     /**
      * The form field type.
@@ -45,20 +47,20 @@ class JFormFieldImageEdit extends JFormField
         parent::__construct($form);
 
 
-        $this->user = JFactory::getUser(JFactory::getApplication()->input->get('id'));
+        $this->user = Factory::getUser(Factory::getApplication()->input->get('id'));
         $this->users_groups = $this->user->getAuthorisedGroups();
-        $this->users_alias = JApplication::stringURLSafe($this->user->name) . '-' . $this->user->id;
+        $this->users_alias = OutputFilter::stringURLSafe($this->user->name) . '-' . $this->user->id;
 
-        $this->session_user = JFactory::getUser();
+        $this->session_user = Factory::getUser();
         $this->session_users_groups = $this->session_user->getAuthorisedGroups();
 
-        $plugin         = JPluginHelper::getPlugin('user', 'staffprofile');
-        $plugin_params  = new JRegistry($plugin->params);
+        $plugin         = PluginHelper::getPlugin('user', 'staffprofile');
+        $plugin_params  = new Registry($plugin->params);
         $this->savepath = $plugin_params->get('avatar_dir');
         #echo "<pre>\n"; var_dump($this->savepath); echo "</pre>\n";exit;
 
 
-        $db    = JFactory::getDBO();
+        $db    = Factory::getDBO();
         $query = $db->getQuery(true);
 
         $query->select('id')
@@ -99,7 +101,7 @@ class JFormFieldImageEdit extends JFormField
      */
     protected function getInput()
     {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
 
         #echo "<pre>\n"; var_dump($this->user); echo "</pre>\n"; exit;
         #echo "<pre>\n"; var_dump($this->users_groups); echo "</pre>\n"; exit;
@@ -119,18 +121,40 @@ class JFormFieldImageEdit extends JFormField
         $output .= '<input type="hidden" name="jform[profile][avatar_img]" id="' . $this->savename . '" value="' . $value . '" />';
 
         if (in_array($this->super_user_group_id, $this->session_users_groups) || in_array($this->admin_user_group_id, $this->session_users_groups)) {
-            
+
             $imageedit_path = '/plugins/user/staffprofile/libraries/ImageEdit/j-image-edit.php?savename=' . $this->savename . '&amp;savedir=' . $this->savepath . '&amp;el_id=' . $this->el_id . '&isadmin=' . ($app->isClient('administrator') ? '1' : '0');
 
+
             if ($app->isClient('administrator')) {
-                $output .= '<button type="button" class="btn btn-primary" onclick="SqueezeBox.fromElement(this, {handler:\'iframe\', size: {x: 700, y: 600}, url:\'' . $imageedit_path .'\'})"> ' . JText::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
+
+                $output .= HTMLHelper::_(
+                    'bootstrap.renderModal',
+                    'imageEditModal',
+                    [
+                        'title'       => 'Profile Image',
+                        'backdrop'    => 'static',
+                        'keyboard'    => false,
+                        'closeButton' => false,
+                        'bodyHeight'  => '70',
+                        'modalWidth'  => '80',
+                        'footer'      => '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-target="#closeBtn">'. Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>',
+                        'url' => $imageedit_path
+                    ]
+                );
+
+                #$output .= '<button type="button" class="btn btn-primary" onclick="SqueezeBox.fromElement(this, {handler:\'iframe\', size: {x: 700, y: 600}, url:\'' . $imageedit_path .'\'})"> ' . Text::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
+                $output .= '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageEditModal">' . Text::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
             } else {
-                $output .= '<button type="button" class="btn btn-primary" onclick="document.getElementById(\'avatar-image-editor\').setAttribute(\'src\', \'' . $imageedit_path . '\')" data-a11y-dialog-show="avatar-dialog"> ' . JText::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
+                $output .= '<button type="button" class="btn btn-primary" onclick="document.getElementById(\'avatar-image-editor\').setAttribute(\'src\', \'' . $imageedit_path . '\')" data-a11y-dialog-show="avatar-dialog"> ' . Text::_('PLG_USER_STAFFPROFILE_PUBLIC_FIELD_IMAGEEDIT_BUTTON') . '</button> ';
             }
-            
-            
+
+
             $output .= '<button type="button" class="btn" onclick="document.getElementById(\'' . $this->el_id . '-preview\').src=\'' .  $this->savepath  . '/' . $this->default_src . '\';document.getElementById(\'' . $this->savename . '\').value=\'\'">Remove image</button>';
         }
+
+
+
+
         return $output;
     }
 
@@ -146,12 +170,12 @@ class JFormFieldImageEdit extends JFormField
     protected function getLabel()
     {
         if (in_array($this->super_user_group_id, $this->session_users_groups) || in_array($this->admin_user_group_id, $this->session_users_groups)) {
-            return JText::_($this->element['label_can_edit']);
+            return Text::_($this->element['label_can_edit']);
         } else if (!$this->image_exists || $this->value == '') {
-            return JText::_($this->element['label_empty']);
+            return Text::_($this->element['label_empty']);
         }
 
-        return JText::_($this->element['label']);
+        return Text::_($this->element['label']);
     }
 
 }

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="plugin" group="user" version="3.2.0">
+<extension type="plugin" group="user" method="upgrade">
 
     <name>PLG_USER_STAFFPROFILE</name>
     <author>Andy Kirk</author>
-    <authorEmail>webmaster@npeu.ox.ac.uk</authorEmail>
-    <authorUrl>http://www.npeu.ox.ac.uk</authorUrl>
-    <creationDate>July 2012</creationDate>
-    <copyright>(C) NPEU 2012</copyright>
-    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>andy.kirk@npeu.ox.ac.uk</authorEmail>
+    <authorUrl>https://www.npeu.ox.ac.uk</authorUrl>
+    <creationDate>October 2023</creationDate>
+    <copyright>(C) NPEU 2023</copyright>
+    <license>MIT License; see LICENSE.md</license>
 
     <!--  The version string is recorded in the components table -->
-    <version>2.4.0</version>
+    <version>4.0.1</version>
     <!-- The description is optional and defaults to the name -->
     <description>PLG_USER_STAFFPROFILE_XML_DESCRIPTION</description>
 
@@ -25,13 +25,13 @@
         </sql>
     </uninstall>
 
+    <namespace path="src">NPEU\Plugin\User\StaffProfile</namespace>
     <files>
-        <filename plugin="staffprofile">staffprofile.php</filename>
-        <filename>index.html</filename>
-        <folder>fields</folder>
+        <folder plugin="staffprofile">src</folder>
+        <folder>forms</folder>
         <folder>language</folder>
         <folder>libraries</folder>
-        <folder>profiles</folder>
+        <folder>services</folder>
         <folder>sql</folder>
     </files>
 

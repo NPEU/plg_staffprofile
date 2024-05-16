@@ -1,24 +1,20 @@
 <?php
-/**
- * @package     StaffList
- * @subpackage  plg_user_staffprofile
- * @copyright   Copyright (C) 2012 Andy Kirk.
- * @author      Andy Kirk
- * @license     License GNU General Public License version 2 or later
- */
+namespace NPEU\Plugin\User\StaffProfile\Field;
 
-// No direct access
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Field\ListField;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\Database\DatabaseInterface;
+
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
-
 /**
- * Form Field class for the Joomla Framework.
- *
- * @package     Extras
- * @subpackage  com_extras
+ * Form field for a list of admin groups.
  */
-class JFormFieldStaff extends JFormFieldList
+class StaffField extends ListField
 {
     /**
      * The form field type.
@@ -27,6 +23,7 @@ class JFormFieldStaff extends JFormFieldList
      */
     protected $type = 'Staff';
 
+    protected $layout = 'joomla.form.field.list-fancy-select';
     /**
      * Method to get the field options.
      *
@@ -35,11 +32,11 @@ class JFormFieldStaff extends JFormFieldList
     protected function getOptions()
     {
         // Load  language in case this is used for other extensions
-        $lang = JFactory::getLanguage();
-        $lang->load('com_projects', JPATH_ADMINISTRATOR);
-
+        //$lang = Factory::getLanguage();
+        //$lang->load('com_projects', JPATH_ADMINISTRATOR);
+        #echo "<pre>\n"; var_dump('wer'); echo "</pre>\n"; exit;
         $options = array();
-        $db = JFactory::getDBO();
+        $db = Factory::getDBO();
         $q  = 'SELECT u.id, u.name, up1.profile_value AS first_name, up2.profile_value AS last_name ';
         $q .= 'FROM `#__users` u ';
         $q .= 'JOIN `#__user_usergroup_map` ugm ON u.id = ugm.user_id ';
@@ -52,7 +49,7 @@ class JFormFieldStaff extends JFormFieldList
 
         $db->setQuery($q);
         if (!$db->execute($q)) {
-            JError::raiseError( 500, $db->stderr() );
+            throw new GenericDataException(implode("\n", $errors), 500);
             return false;
         }
 
@@ -62,7 +59,7 @@ class JFormFieldStaff extends JFormFieldList
 
         $i = 0;
         foreach ($staff_members as $staff_member) {
-            $options[] = JHtml::_('select.option', $staff_member['id'], $staff_member['name']);
+            $options[] = HTMLHelper::_('select.option', $staff_member['id'], $staff_member['name']);
             $i++;
         }
         if ($i > 0) {
@@ -70,8 +67,9 @@ class JFormFieldStaff extends JFormFieldList
             $options = array_merge(parent::getOptions(), $options);
         } else {
             $options = parent::getOptions();
-            $options[0]->text = JText::_('PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_NO_STAFF');
+            $options[0]->text = Text::_('PLG_USER_STAFFPROFILE_TEAM_FIELD_TEAM_NO_STAFF');
         }
         return $options;
     }
+
 }
