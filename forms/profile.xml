@@ -167,7 +167,7 @@
                 label="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_AUTO_LABEL"
                 description="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_AUTO_DESC"
                 message="PLG_USER_STAFFPROFILE_PUBS_FIELD_PUBLICATIONS_AUTO_MESSAGE"
-                filter="safehtml"
+                filter="raw"
                 cols="30"
                 rows="5"
             />
