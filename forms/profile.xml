@@ -104,14 +104,14 @@
             label="PLG_USER_STAFFPROFILE_CONNECITONS_TITLE"
         >
             <field
-                name="twitter"
-                id="twitter"
+                name="x"
+                id="x"
                 type="text"
-                label="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_TWITTER_LABEL"
-                description="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_TWITTER_DESC"
-                message="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_TWITTER_MESSAGE"
+                label="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_X_LABEL"
+                description="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_X_DESC"
+                message="PLG_USER_STAFFPROFILE_CONNECITONS_FIELD_X_MESSAGE"
                 hint="Optional"
-                prefix="https://twitter.com/"
+                prefix="https://x.com/"
                 pattern="^[A-Za-z0-9_]{1,32}$"
             />
             <field
