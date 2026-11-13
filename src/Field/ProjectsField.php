@@ -40,7 +40,7 @@ class ProjectsField extends ListField
         $db = Factory::getDBO();
         $q  = 'SELECT id, name as title ';
         $q .= 'FROM `#__brands` ';
-        $q .= 'WHERE catid = 171 '; // Note this hard-coded value isn't robust/transferable.
+        $q .= 'WHERE catid = 171 AND STATE = 1 '; // Note this hard-coded value isn't robust/transferable.
         $q .= 'ORDER BY name;';
 
         $db->setQuery($q);
